@@ -1,0 +1,69 @@
+server:
+  port: 8080 # This is the main entry point for the entire backend
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          # Enables the gateway to use service IDs from Eureka for routing
+          enabled: true
+      routes:
+        # Route configuration for the Auth Service
+        - id: auth-service
+          # "lb" stands for "load balancer". It tells the gateway to look up the service
+          # named "auth-service" in Eureka.
+          uri: lb://auth-service
+          predicates:
+            # This route will be matched if the request path starts with /api/v1/auth/
+            - Path=/api/v1/auth/**
+
+        # Route for Business Name Generator service
+        - id: business-name-generator
+          uri: lb://business-name-generator
+          predicates:
+            - Path=/api/v1/names/**
+
+        # Route for the RAG Service
+        - id: rag-service
+          uri: lb://rag-service
+          predicates:
+            - Path=/api/v1/rag/**
+
+        # Add the route for the Logo Generation Service
+        - id: logo-generator
+          uri: lb://logo-generator
+          predicates:
+            - Path=/api/v1/logos/**
+
+        # Add the route for the Document Generation Service
+        - id: docs-generator
+          uri: lb://docs-generator
+          predicates:
+            - Path=/api/v1/docs/**
+
+        # Add the route for the Presentation Generation Service
+        - id: presentation-generator
+          uri: lb://presentation-generator
+          predicates:
+            - Path=/api/v1/presentations/**
+
+        # Add the route for the Short Video Generation Service
+        - id: short-video-generator
+          uri: lb://short-video-generator
+          predicates:
+            - Path=/api/v1/videos/**
+
+        # Add the route for the Website Builder Service
+        - id: website-builder
+          uri: lb://website-builder
+          predicates:
+            - Path=/api/v1/websites/**
+
+eureka:
+  client:
+    # The URL of our Eureka server
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
