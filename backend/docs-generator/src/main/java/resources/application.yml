@@ -1,0 +1,17 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: docs-generator
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# Configuration for file storage
+file:
+  upload-dir: ./uploads # Documents will be saved in an 'uploads' folder in the root directory
