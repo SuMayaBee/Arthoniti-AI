@@ -1,0 +1,19 @@
+server:
+  port: 0 # Assign a random available port
+
+spring:
+  application:
+    name: logo-generator # Service name for Eureka discovery
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# Placeholder for the image generation API configuration
+image-gen:
+  api:
+    url: "https://api.image-generation-provider.com/v1/images/generations"
+    key: "YOUR_IMAGE_API_KEY"
