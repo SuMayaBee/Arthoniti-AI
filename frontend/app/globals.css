@@ -1,0 +1,592 @@
+/** biome-ignore-all lint/suspicious/noUnknownAtRules: allow Tailwind @tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+/* Generic contentEditable cleanup for pitch deck inline editing */
+[contenteditable][data-no-borders="true"] {
+  outline: none !important;
+  box-shadow: none !important;
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+}
+
+[contenteditable][data-no-borders="true"]:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+}
+
+/* Hide scrollbar in edit mode */
+.edit-mode-scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.edit-mode-scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Remove border when focused in edit mode */
+.edit-mode-no-border:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+body {
+  font-family: var(--font-open-sans), sans-serif;
+}
+
+/* Enable smooth scrolling for anchor navigation */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Global button font styling */
+button,
+.btn,
+[type="button"],
+[type="submit"],
+[type="reset"] {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  font-family: var(--font-open-sans), sans-serif !important;
+}
+
+/* Tiptap Editor Styles - Document View */
+.tiptap-editor .ProseMirror {
+  height: 100%;
+  min-height: 1000px;
+  padding: 0;
+  font-family: Times, serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #000;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  cursor: text;
+}
+
+.tiptap-editor .ProseMirror:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Content Editable Styles - Google Docs like */
+.tiptap-editor[contenteditable="true"] {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  cursor: text !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+}
+
+.tiptap-editor[contenteditable="true"]:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.tiptap-editor[contenteditable="true"] * {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+}
+
+.tiptap-editor .ProseMirror h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 24px;
+  margin-top: 32px;
+}
+
+.tiptap-editor .ProseMirror h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  margin-top: 32px;
+}
+
+.tiptap-editor .ProseMirror h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  margin-top: 24px;
+}
+
+.tiptap-editor .ProseMirror p {
+  margin-bottom: 16px;
+}
+
+.tiptap-editor .ProseMirror ul,
+.tiptap-editor .ProseMirror ol {
+  margin-left: 16px;
+  margin-bottom: 16px;
+}
+
+.tiptap-editor .ProseMirror li {
+  margin-bottom: 4px;
+}
+
+.tiptap-editor .ProseMirror strong {
+  font-weight: bold;
+}
+
+.tiptap-editor .ProseMirror em {
+  font-style: italic;
+}
+
+.tiptap-editor .ProseMirror u {
+  text-decoration: underline;
+}
+
+@layer utilities {
+  /* Utility to apply Space Grotesk font anywhere */
+  .font-space-grotesk {
+    font-family: var(--font-space-grotesk), var(--font-open-sans), sans-serif;
+  }
+  /* Homepage: apply Space Grotesk to all headings within .home-headings */
+  .home-headings h1,
+  .home-headings h2,
+  .home-headings h3,
+  .home-headings h4,
+  .home-headings h5,
+  .home-headings h6 {
+    font-family: var(--font-space-grotesk), var(--font-open-sans), sans-serif;
+  }
+  /* Neon purple outer glow like dashboard panels */
+  .shadow-neon-purple {
+    box-shadow:
+      0 0 20px #8400ff59,
+      0 0 40px #8400ff59,
+      0 0 60px #8400ff59,
+      0 0 80px #8400ff59;
+  }
+
+  .dark .shadow-neon-purple {
+    box-shadow:
+      0 10px 28px rgba(168, 85, 247, 0.45),
+      0 24px 64px rgba(168, 85, 247, 0.6),
+      0 0 0 1px rgba(168, 85, 247, 0.35);
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Complex elliptical bottom radius for testimonial headers */
+  .testimonial-curved {
+    border-radius: 5% 25% 81% 19% / 38% 0% 100% 62%;
+  }
+
+  /* Custom gradient border wrapper */
+  .border-gradient-wrapper {
+    position: relative;
+    padding: 2px;
+    background: linear-gradient(
+      to right,
+      #a44eff,
+      #00cfff,
+      #00d977,
+      #ffd200,
+      #ff5e3a
+    );
+    border-radius: 18px;
+    transition: all 0.8s ease-in-out;
+  }
+
+  .border-gradient-wrapper > * {
+    border-radius: 16px;
+  }
+
+  /* Custom gradient background */
+  .bg-gradient-custom {
+    background: linear-gradient(
+      to right,
+      #a44eff,
+      #00cfff,
+      #00d977,
+      #ffd200,
+      #ff5e3a
+    );
+  }
+
+  /* Header gradient background */
+  .bg-header-gradient {
+    background: linear-gradient(
+      to right,
+      #a44eff,
+      #00cfff,
+      #00d977,
+      #ffd200,
+      #ff5e3a
+    );
+  }
+
+  /* Open Sans font utility */
+  .font-open-sans {
+    font-family: var(--font-open-sans), sans-serif;
+  }
+
+  /* Rainbow gradient for input border */
+  .rainbow-gradient-border {
+    background: linear-gradient(
+      to right,
+      #a44eff,
+      #00cfff,
+      #00d977,
+      #ffd200,
+      #ff5e3a
+    );
+  }
+
+  .rotating-gradient-border {
+    background: linear-gradient(
+      to right,
+      #a44eff,
+      #00cfff,
+      #00d977,
+      #ffd200,
+      #ff5e3a
+    );
+    background-size: 200% 200%;
+    animation: rotate-gradient 3s linear infinite;
+  }
+
+  @keyframes rotate-gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Rainbow gradient for card border */
+  .rainbow-gradient-border-card {
+    background: linear-gradient(
+      to right,
+      #a44eff,
+      #00cfff,
+      #00d977,
+      #ffd200,
+      #ff5e3a
+    );
+  }
+
+  /* Hide scrollbar but keep scrolling */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+/* Even, all-sides balanced shadow utility */
+@layer utilities {
+  /* Surface background to ensure shadow contrast */
+  .bg-surface {
+    background-color: hsl(var(--card));
+  }
+  .dark .bg-surface {
+    background-color: hsl(var(--card));
+  }
+
+  /* Outer glow using a pseudo-element so shadows aren't clipped */
+  .shadow-glow {
+    position: relative;
+  }
+  .shadow-glow::before {
+    content: "";
+    position: absolute;
+    inset: -16px;
+    border-radius: inherit;
+    box-shadow:
+      0 18px 48px 0 rgba(16, 24, 40, 0.22),
+      0 4px 12px 0 rgba(16, 24, 40, 0.16);
+    z-index: 0;
+  }
+  .dark .shadow-glow::before {
+    box-shadow:
+      0 24px 64px 0 rgba(0, 0, 0, 0.65),
+      0 6px 16px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  /* Subtle multi-layer shadow that wraps evenly on all sides */
+  .shadow-balanced {
+    box-shadow:
+      0 2px 6px rgba(16, 24, 40, 0.1),
+      0 12px 32px rgba(16, 24, 40, 0.16),
+      0 0 0 1px rgba(16, 24, 40, 0.06) inset;
+  }
+
+  /* Slightly stronger variant for dark backgrounds */
+  .dark .shadow-balanced {
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.35),
+      0 12px 36px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  }
+
+  /* Larger, more pronounced balanced shadow */
+  .shadow-balanced-lg {
+    box-shadow:
+      0 4px 12px rgba(16, 24, 40, 0.12),
+      0 24px 56px rgba(16, 24, 40, 0.22),
+      0 0 0 1px rgba(16, 24, 40, 0.06) inset;
+  }
+  .dark .shadow-balanced-lg {
+    box-shadow:
+      0 4px 14px rgba(0, 0, 0, 0.45),
+      0 28px 64px rgba(0, 0, 0, 0.65),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  }
+}
+
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 280 67% 56%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 280 67% 56%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+/* Markdown Editor Styles */
+.w-md-editor {
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.w-md-editor-toolbar {
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.w-md-editor-content {
+  background-color: #ffffff;
+}
+
+.w-md-editor-text {
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.w-md-editor-preview {
+  background-color: #ffffff;
+  padding: 16px;
+}
+
+/* Chat Markdown Content Styles */
+.markdown-content {
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-content h1 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 1rem 0 0.75rem 0;
+  color: #374151;
+}
+
+.markdown-content h2 {
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin: 0.875rem 0 0.5rem 0;
+  color: #374151;
+}
+
+.markdown-content h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.75rem 0 0.5rem 0;
+  color: #374151;
+}
+
+.markdown-content strong {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.markdown-content em {
+  font-style: italic;
+}
+
+.markdown-content del {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.markdown-content code {
+  background-color: #f3f4f6;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  color: #374151;
+}
+
+.markdown-content pre {
+  background-color: #f3f4f6;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  margin: 0.5rem 0;
+  overflow-x: auto;
+}
+
+.markdown-content pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+.markdown-content ul {
+  list-style-type: disc;
+  list-style-position: inside;
+  margin: 0.5rem 0;
+  margin-left: 1rem;
+}
+
+.markdown-content ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+  margin: 0.5rem 0;
+  margin-left: 1rem;
+}
+
+.markdown-content li {
+  margin-bottom: 0.25rem;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid #d1d5db;
+  padding-left: 1rem;
+  font-style: italic;
+  margin: 0.5rem 0;
+  color: #6b7280;
+}
+
+.markdown-content a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.markdown-content a:hover {
+  color: #1d4ed8;
+}
+
+.markdown-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+  margin: 0.5rem 0;
+}
+
+.markdown-content hr {
+  border: none;
+  border-top: 1px solid #d1d5db;
+  margin: 1rem 0;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
