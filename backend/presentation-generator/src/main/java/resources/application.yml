@@ -1,0 +1,17 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: presentation-generator
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# Use the same upload directory as the docs-generator for consistency
+file:
+  upload-dir: ./uploads
