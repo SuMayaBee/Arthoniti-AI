@@ -1,0 +1,17 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: website-builder
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# Directory to save the generated static HTML files
+file:
+  publish-dir: ./published-sites
