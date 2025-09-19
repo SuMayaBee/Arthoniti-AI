@@ -1,0 +1,19 @@
+server:
+  port: 0 # Let Spring Boot assign a random port
+
+spring:
+  application:
+    name: business-name-generator # The service name for Eureka registration
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# Placeholder for external API configurations
+ai:
+  api:
+    key: "YOUR_THIRD_PARTY_AI_API_KEY_HERE"
+    url: "https://api.generative-ai-provider.com/v1/completions"
