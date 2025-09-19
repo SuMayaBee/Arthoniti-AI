@@ -1,0 +1,30 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: rag-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/rag_db # Make sure this database exists
+    username: your_postgres_user
+    password: your_postgres_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        # This dialect is important for native query support with pgvector
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# Placeholder for the embedding model API
+embedding:
+  api:
+    url: "https://api.embedding-provider.com/v1/embed"
