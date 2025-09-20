@@ -4,6 +4,27 @@ server:
 spring:
   application:
     name: website-builder
+  # Database Configuration for website_db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/website_db
+    username: your_postgres_user # CHANGE ME
+    password: your_postgres_password # CHANGE ME
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  # Spring AI Configuration for Google Gemini API
+  ai:
+    google:
+      gemini:
+        api-key: "YOUR_GEMINI_API_KEY" # CHANGE ME
+        chat:
+          options:
+            model: gemini-1.5-flash-latest # Use a powerful model for code generation
+            temperature: 0.3 # Lower temp for more predictable code
 
 eureka:
   client:
@@ -12,6 +33,11 @@ eureka:
   instance:
     prefer-ip-address: true
 
-# Directory to save the generated static HTML files
-file:
-  publish-dir: ./published-sites
+# AWS Configuration (for deployment service)
+aws:
+  access-key-id: "YOUR_AWS_ACCESS_KEY" # CHANGE ME
+  secret-access-key: "YOUR_AWS_SECRET_KEY" # CHANGE ME
+  region: "us-east-1" # CHANGE ME
+  s3:
+    bucket-name: "your-deployment-bucket" # CHANGE ME
+
