@@ -4,18 +4,33 @@ server:
 spring:
   application:
     name: rag-service
+  # Database Configuration for rag_db
   datasource:
-    url: jdbc:postgresql://localhost:5432/rag_db # Make sure this database exists
-    username: your_postgres_user
-    password: your_postgres_password
+    url: jdbc:postgresql://localhost:5432/rag_db
+    username: your_postgres_user # CHANGE ME
+    password: your_postgres_password # CHANGE ME
     driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        # This dialect is important for native query support with pgvector
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+  # Spring AI Configuration
+  ai:
+    # Google Gemini for Chat and Embeddings
+    google:
+      gemini:
+        api-key: "YOUR_GEMINI_API_KEY" # CHANGE ME
+        chat:
+          options:
+            model: gemini-1.5-flash-latest
+            temperature: 0.4
+        embedding:
+          options:
+            model: text-embedding-004 # Google's 768-dimension embedding model
+    # Vector Store Configuration
+    vector:
+      store:
+        pgvector:
+          index-type: HNSW # Use the high-performance HNSW index
+          distance-type: COSINE # Cosine distance is good for semantic similarity
+          # The dimension must match the embedding model's output
+          dimensions: 768
 
 eureka:
   client:
@@ -24,7 +39,3 @@ eureka:
   instance:
     prefer-ip-address: true
 
-# Placeholder for the embedding model API
-embedding:
-  api:
-    url: "https://api.embedding-provider.com/v1/embed"
