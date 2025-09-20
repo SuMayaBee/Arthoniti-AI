@@ -1,9 +1,29 @@
 server:
-  port: 0 # Let Spring Boot assign a random port
+  port: 0 # Run on a random available port
 
 spring:
   application:
-    name: business-name-generator # The service name for Eureka registration
+    name: business-name-generator
+  # Database Configuration for business_db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/business_db
+    username: your_postgres_user # CHANGE ME
+    password: your_postgres_password # CHANGE ME
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate # Best practice for production; schema managed via scripts
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  # Spring AI Configuration for OpenAI
+  ai:
+    openai:
+      api-key: "sk-..." # CHANGE ME - Your OpenAI API Key
+      chat:
+        options:
+          model: gpt-3.5-turbo # A cost-effective model for name generation
+          temperature: 0.8 # Higher temperature for more creative names
 
 eureka:
   client:
@@ -12,8 +32,3 @@ eureka:
   instance:
     prefer-ip-address: true
 
-# Placeholder for external API configurations
-ai:
-  api:
-    key: "YOUR_THIRD_PARTY_AI_API_KEY_HERE"
-    url: "https://api.generative-ai-provider.com/v1/completions"
