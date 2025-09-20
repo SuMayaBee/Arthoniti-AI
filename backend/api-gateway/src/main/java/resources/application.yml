@@ -1,69 +1,70 @@
 server:
-  port: 8080 # This is the main entry point for the entire backend
+  port: 8080 # The single public-facing port for the entire backend
 
 spring:
   application:
     name: api-gateway
   cloud:
     gateway:
-      discovery:
-        locator:
-          # Enables the gateway to use service IDs from Eureka for routing
-          enabled: true
       routes:
-        # Route configuration for the Auth Service
+        # Route for the advanced Auth Service
         - id: auth-service
-          # "lb" stands for "load balancer". It tells the gateway to look up the service
-          # named "auth-service" in Eureka.
-          uri: lb://auth-service
+          uri: lb://auth-service # "lb://" tells the gateway to look up the service in Eureka
           predicates:
-            # This route will be matched if the request path starts with /api/v1/auth/
             - Path=/api/v1/auth/**
 
-        # Route for Business Name Generator service
+        # Route for the advanced Business Name Generator Service
         - id: business-name-generator
           uri: lb://business-name-generator
           predicates:
-            - Path=/api/v1/names/**
+            - Path=/api/v1/business-generation/**
 
-        # Route for the RAG Service
+        # Route for the advanced RAG Service
         - id: rag-service
           uri: lb://rag-service
           predicates:
             - Path=/api/v1/rag/**
 
-        # Add the route for the Logo Generation Service
+        # Route for the advanced Chat Service
+        - id: chat-service
+          uri: lb://chat-service
+          predicates:
+            - Path=/api/v1/chat/**
+
+        # Route for the advanced Logo Generator Service
         - id: logo-generator
           uri: lb://logo-generator
           predicates:
-            - Path=/api/v1/logos/**
+            - Path=/api/v1/logo/**
 
-        # Add the route for the Document Generation Service
+        # Route for the advanced Docs Generator Service
         - id: docs-generator
           uri: lb://docs-generator
           predicates:
-            - Path=/api/v1/docs/**
+            - Path=/api/v1/document-generation/**
 
-        # Add the route for the Presentation Generation Service
+        # Route for the advanced Presentation Generator Service
         - id: presentation-generator
           uri: lb://presentation-generator
           predicates:
-            - Path=/api/v1/presentations/**
+            - Path=/api/v1/presentation/**
 
-        # Add the route for the Short Video Generation Service
+        # Route for the advanced Short Video Generator Service
         - id: short-video-generator
           uri: lb://short-video-generator
           predicates:
-            - Path=/api/v1/videos/**
+            - Path=/api/v1/short-video/**
 
-        # Add the route for the Website Builder Service
+        # Route for the advanced Website Builder Service
         - id: website-builder
           uri: lb://website-builder
           predicates:
-            - Path=/api/v1/websites/**
+            - Path=/api/v1/website-builder/**
 
 eureka:
   client:
-    # The URL of our Eureka server
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/ # The address of our "phonebook"
+  instance:
+    prefer-ip-address: true
+
