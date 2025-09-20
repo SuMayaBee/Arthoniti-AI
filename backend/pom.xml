@@ -33,8 +33,9 @@
         <module>docs-generator</module>
         <module>presentation-generator</module>
         <module>short-video-generator</module>
-        <!-- Add the final website builder module -->
         <module>website-builder</module>
+        <module>market-analysis-service</module>
+
     </modules>
 
     <!--

@@ -1,0 +1,42 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: market-analysis-service
+  # Database Configuration for market_analysis_db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/market_analysis_db
+    username: your_postgres_user # CHANGE ME
+    password: your_postgres_password # CHANGE ME
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        # This tells Hibernate how to handle the custom JSONB type
+        type:
+          descriptor:
+            sql: jsonb
+  # Spring AI Configuration
+  ai:
+    openai:
+      api-key: "YOUR_OPENAI_API_KEY" # CHANGE ME
+      chat:
+        options:
+          model: gpt-4o # Use a powerful model for complex analysis
+          temperature: 0.3
+
+# This is where you would put other API keys for your tools
+# For this example, we simulate the web search.
+api:
+  keys:
+    tavily: "YOUR_TAVILY_API_KEY" # Placeholder for a real search tool
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
