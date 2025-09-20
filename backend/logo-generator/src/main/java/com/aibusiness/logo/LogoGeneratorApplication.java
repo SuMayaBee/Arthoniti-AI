@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
-@EnableDiscoveryClient // Enables service registration with Eureka
+@EnableDiscoveryClient
 public class LogoGeneratorApplication {
 
     public static void main(String[] args) {
@@ -13,3 +13,4 @@ public class LogoGeneratorApplication {
     }
 
 }
+
