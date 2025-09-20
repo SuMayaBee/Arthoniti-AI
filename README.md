@@ -1,4 +1,6 @@
-## Arthoniti AI 🚀 - Empowering young entrepreneurs with AI-driven tools for faster, affordable, and smarter business launches.
+<h1 align="center">Arthoniti AI 🚀</h2>
+<h2 align="center">Empowering young entrepreneurs with AI-driven tools for faster, affordable, and smarter business launches.</h3>
+
 
 The purpose of **Arthoniti AI** is to **empower young entrepreneurs in Bangladesh** by removing the traditional barriers of **high costs, limited access to expertise, and complicated business setup processes**.  
 
