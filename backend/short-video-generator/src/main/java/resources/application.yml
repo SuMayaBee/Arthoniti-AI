@@ -4,6 +4,27 @@ server:
 spring:
   application:
     name: short-video-generator
+  # Database Configuration for video_db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/video_db
+    username: your_postgres_user # CHANGE ME
+    password: your_postgres_password # CHANGE ME
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  # Spring AI Configuration for Google Gemini API
+  ai:
+    google:
+      gemini:
+        api-key: "YOUR_GEMINI_API_KEY" # CHANGE ME
+        chat:
+          options:
+            model: gemini-pro-vision # A model that can understand image/video concepts
+            temperature: 0.7
 
 eureka:
   client:
@@ -11,3 +32,9 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+
+# Google Cloud Storage Configuration
+gcs:
+  bucket-name: your-gcs-bucket-for-videos # CHANGE ME
+  credentials-path: "classpath:your-gcs-credentials.json" # Assumes credentials are in resources
+
