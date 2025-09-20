@@ -1,37 +1,50 @@
 server:
-  port: 0 # Using port 0 tells Spring Boot to assign a random available port.
+  port: 0 # Run on a random port
 
 spring:
   application:
-    name: auth-service # This name will be used to register with Eureka
+    name: auth-service
+  # Database Configuration (PostgreSQL)
   datasource:
-    url: jdbc:postgresql://localhost:5432/auth_db # Replace with your DB details
-    username: your_postgres_user
-    password: your_postgres_password
+    url: jdbc:postgresql://localhost:5432/auth_db
+    username: your_postgres_user # CHANGE ME
+    password: your_postgres_password # CHANGE ME
     driver-class-name: org.postgresql.Driver
+  # JPA Configuration
   jpa:
     hibernate:
-      ddl-auto: update # Automatically updates the schema. Use "validate" in production.
+      ddl-auto: update # In production, use 'validate' or a migration tool like Flyway/Liquibase
     show-sql: true
     properties:
       hibernate:
         format_sql: true
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  # Mail Sender Configuration (e.g., for Gmail)
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: your-email@gmail.com # CHANGE ME
+    password: your-gmail-app-password # CHANGE ME
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
   instance:
-    # Prefer using IP address for registration
     prefer-ip-address: true
 
-# Custom properties for our JWT implementation
-application:
-  security:
-    jwt:
-      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
-      expiration: 86400000 # 24 hours
-      refresh-token:
-        expiration: 604800000 # 7 days
+# JWT Secret Key - USE A STRONG, RANDOMLY GENERATED KEY IN PRODUCTION
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+
+# Google Cloud Storage Configuration
+gcs:
+  bucket-name: your-gcs-bucket-name # CHANGE ME
+  credentials-path: "classpath:your-gcs-credentials.json" # Place your credentials file in src/main/resources
+
