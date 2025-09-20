@@ -4,6 +4,32 @@ server:
 spring:
   application:
     name: docs-generator
+  # Database Configuration for docs_db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/docs_db
+    username: your_postgres_user # CHANGE ME
+    password: your_postgres_password # CHANGE ME
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  # Spring AI Configuration for OpenAI
+  ai:
+    openai:
+      api-key: "sk-..." # CHANGE ME - Your OpenAI API Key
+      chat:
+        options:
+          model: gpt-4-turbo # Use a powerful model for generating detailed documents
+          temperature: 0.4 # Lower temperature for more consistent, professional output
+  # Configuration for file uploads
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 
 eureka:
   client:
@@ -12,6 +38,8 @@ eureka:
   instance:
     prefer-ip-address: true
 
-# Configuration for file storage
-file:
-  upload-dir: ./uploads # Documents will be saved in an 'uploads' folder in the root directory
+# Google Cloud Storage Configuration
+gcs:
+  bucket-name: your-gcs-bucket-name # CHANGE ME
+  credentials-path: "classpath:your-gcs-credentials.json"
+

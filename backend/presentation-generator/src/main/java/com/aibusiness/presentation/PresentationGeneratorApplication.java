@@ -1,10 +1,14 @@
-package com.aibusiness.presentation.dto;
+package com.aibusiness.presentation;
 
-import lombok.Data;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@Data
-public class PresentationGenerationRequest {
-    private String title;
-    private String author;
-    private int numberOfSlides; // How many content slides to generate
+@SpringBootApplication
+@EnableDiscoveryClient
+public class PresentationGeneratorApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(PresentationGeneratorApplication.class, args);
+    }
 }
+
