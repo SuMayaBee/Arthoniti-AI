@@ -1,9 +1,34 @@
 server:
-  port: 0 # Assign a random available port
+  port: 0 # Run on a random available port
 
 spring:
   application:
-    name: logo-generator # Service name for Eureka discovery
+    name: logo-generator
+  # Database Configuration for logo_db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/logo_db
+    username: your_postgres_user # CHANGE ME
+    password: your_postgres_password # CHANGE ME
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate # Use 'validate' in prod, assumes schema is managed externally
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  # Spring AI Configuration for OpenAI
+  ai:
+    openai:
+      api-key: "sk-..." # CHANGE ME - Your OpenAI API Key
+      chat:
+        options:
+          model: gpt-4-turbo # Model for design specification
+      image:
+        options:
+          model: dall-e-3 # Model for image generation
+          quality: hd
+          size: 1024x1024
+          style: vivid
 
 eureka:
   client:
@@ -12,8 +37,12 @@ eureka:
   instance:
     prefer-ip-address: true
 
-# Placeholder for the image generation API configuration
-image-gen:
-  api:
-    url: "https://api.image-generation-provider.com/v1/images/generations"
-    key: "YOUR_IMAGE_API_KEY"
+# Google Cloud Storage Configuration
+gcs:
+  bucket-name: your-gcs-bucket-name # CHANGE ME
+  credentials-path: "classpath:your-gcs-credentials.json" # Place credentials in src/main/resources
+
+# API Key for Background Removal Service (e.g., remove.bg)
+removebg:
+  api-key: "..." # CHANGE ME - Your remove.bg API Key
+
