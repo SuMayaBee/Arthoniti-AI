@@ -16,6 +16,9 @@ By democratizing entrepreneurship, Arthoniti AI aims to **create jobs, boost the
 
 ---
 
+[![Arthoniti AI Introduction](https://img.youtube.com/vi/1EGBr42moCE/0.jpg)](https://www.youtube.com/watch?v=1EGBr42moCE)
+
+
 ## 📋 Table of Contents
 - [✨ Core Features](#-core-features-in-depth)
 - [🏛️ System Architecture](#-system-architecture)
