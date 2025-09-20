@@ -1,16 +1,14 @@
-// AuthResponse.java
 package com.aibusiness.auth.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthResponse {
-    private String accessToken;
-    private String tokenType = "bearer";
+public class ValidateTokenResponse {
+    private boolean valid;
+    private String message;
+    private UserDto user;
 }
