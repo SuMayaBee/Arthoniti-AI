@@ -4,6 +4,35 @@ server:
 spring:
   application:
     name: presentation-generator
+  # Database Configuration for presentation_db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/presentation_db
+    username: your_postgres_user # CHANGE ME
+    password: your_postgres_password # CHANGE ME
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  # Spring AI Configuration for OpenAI
+  ai:
+    openai:
+      api-key: "sk-..." # CHANGE ME - Your OpenAI API Key
+      chat:
+        options:
+          model: gpt-4-turbo
+          temperature: 0.5
+      image:
+        options:
+          model: dall-e-3
+          quality: hd
+  # Multipart file settings
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 50MB # Allow for multiple files
 
 eureka:
   client:
@@ -12,6 +41,8 @@ eureka:
   instance:
     prefer-ip-address: true
 
-# Use the same upload directory as the docs-generator for consistency
-file:
-  upload-dir: ./uploads
+# Google Cloud Storage Configuration
+gcs:
+  bucket-name: your-gcs-bucket-name # CHANGE ME
+  credentials-path: "classpath:your-gcs-credentials.json"
+
