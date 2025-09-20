@@ -1,73 +1,68 @@
 package com.aibusiness.chat.controller;
-
-import com.aibusiness.chat.client.RagServiceClient;
-import com.aibusiness.chat.dto.RagQueryRequest;
-import com.aibusiness.chat.dto.RagQueryResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.handler.TextWebSocketHandler;
-
-import java.io.IOException;
+// ... (imports)
+import com.aibusiness.chat.dto.*;
+import com.aibusiness.chat.service.ChatService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
 
-@Component
-public class ChatController extends TextWebSocketHandler {
+@RestController
+@RequestMapping("/api/v1/chat")
+@RequiredArgsConstructor
+public class ChatController {
 
-    private static final Logger log = LoggerFactory.getLogger(ChatController.class);
-    private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
-    private final RagServiceClient ragServiceClient;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ChatService chatService;
 
-    public ChatController(RagServiceClient ragServiceClient) {
-        this.ragServiceClient = ragServiceClient;
+    // --- Session Management ---
+    @PostMapping("/sessions")
+    public ResponseEntity<SessionResponse> createSession(@Valid @RequestBody CreateSessionRequest request) {
+        return ResponseEntity.ok(chatService.createSession(request));
+    }
+    
+    @GetMapping("/sessions/{userId}")
+    public ResponseEntity<List<SessionResponse>> getUserSessions(@PathVariable Long userId) {
+        return ResponseEntity.ok(chatService.getSessionsByUserId(userId));
+    }
+    
+    @GetMapping("/sessions/{sessionId}/messages")
+    public ResponseEntity<SessionWithMessagesResponse> getSessionWithMessages(@PathVariable Long sessionId, @RequestParam Long userId) {
+        return ResponseEntity.ok(chatService.getSessionWithMessages(sessionId, userId));
     }
 
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        sessions.add(session);
-        log.info("New WebSocket connection established: {}", session.getId());
+    @PutMapping("/sessions/{sessionId}/title")
+    public ResponseEntity<SessionResponse> updateSessionTitle(@PathVariable Long sessionId, @RequestParam Long userId, @RequestParam String title) {
+        return ResponseEntity.ok(chatService.updateSessionTitle(sessionId, userId, title));
     }
 
-    @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        String userQuery = message.getPayload();
-        log.info("Received message from {}: {}", session.getId(), userQuery);
-
-        // 1. Call the RAG Service to get relevant context
-        log.info("Querying RAG service with: '{}'", userQuery);
-        RagQueryResponse ragResponse = ragServiceClient.queryRag(new RagQueryRequest(userQuery));
-        log.info("Received response from RAG service.");
-
-        // --- AI Integration Point ---
-        // 2. Combine user query and RAG context, then call a Generative AI model.
-        // The prompt would be something like:
-        // "Using the following context, answer the user's question.
-        // Context: [ragResponse.getAnswer()]
-        // Question: [userQuery]"
-        // String finalAnswer = llmClient.generate(prompt);
-        // -----------------------------
-
-        // For now, we will use the response from the RAG service directly as the final answer.
-        String finalAnswer = ragResponse.getAnswer();
-
-        // 3. Send the final answer back to the user
-        try {
-            session.sendMessage(new TextMessage(finalAnswer));
-            log.info("Sent response to {}: {}", session.getId(), finalAnswer);
-        } catch (IOException e) {
-            log.error("Error sending message to session {}: {}", session.getId(), e.getMessage());
-        }
+    @DeleteMapping("/sessions/{sessionId}")
+    public ResponseEntity<Map<String, String>> deleteSession(@PathVariable Long sessionId, @RequestParam Long userId) {
+        chatService.deleteSession(sessionId, userId);
+        return ResponseEntity.ok(Map.of("message", "Session deleted successfully"));
     }
 
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        sessions.remove(session);
-        log.info("WebSocket connection closed: {} with status {}", session.getId(), status);
+    // --- Messaging ---
+    @PostMapping("/message")
+    public ResponseEntity<SendMessageResponse> sendMessage(@Valid @RequestBody SendMessageRequest request) {
+        return ResponseEntity.ok(chatService.sendMessage(request));
+    }
+
+    @PostMapping("/message/stream")
+    public SseEmitter sendMessageStream(@Valid @RequestBody SendMessageRequest request) {
+        return chatService.sendMessageStream(request);
+    }
+
+    // --- Health ---
+    @GetMapping("/health")
+    public ResponseEntity<Map<String, String>> healthCheck() {
+        return ResponseEntity.ok(Map.of(
+            "status", "healthy",
+            "service", "chat",
+            "model", "gpt-4o-mini"
+        ));
     }
 }
+

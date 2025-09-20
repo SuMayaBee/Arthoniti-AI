@@ -4,7 +4,28 @@ server:
 spring:
   application:
     name: chat-service
+  # Database Configuration for chat_db
+  datasource:
+    url: jdbc:postgresql://localhost:5432/chat_db
+    username: your_postgres_user # CHANGE ME
+    password: your_postgres_password # CHANGE ME
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  # Spring AI Configuration for OpenAI API
+  ai:
+    openai:
+      api-key: "YOUR_OPENAI_API_KEY" # CHANGE ME
+      chat:
+        options:
+          model: gpt-4o-mini # Use a cost-effective and fast model
+          temperature: 0.5
 
+# Eureka Client Configuration
 eureka:
   client:
     service-url:
@@ -12,7 +33,11 @@ eureka:
   instance:
     prefer-ip-address: true
 
-# Placeholder for the generative AI model API
-llm:
-  api:
-    url: "https://api.generative-ai-provider.com/v1/chat/completions"
+# Feign Client Configuration for RAG Service
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 15000
+
