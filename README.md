@@ -1,4 +1,4 @@
-## Arthoniti AI 🚀 - Therap JavaFest 2025
+## Arthoniti AI 🚀 - Empowering young entrepreneurs with AI-driven tools for faster, affordable, and smarter business launches.
 
 The purpose of **Arthoniti AI** is to **empower young entrepreneurs in Bangladesh** by removing the traditional barriers of **high costs, limited access to expertise, and complicated business setup processes**.  
 
@@ -206,7 +206,7 @@ Our architecture employs two distinct patterns for communication, chosen based o
 
 The Arthoniti AI suite was proudly developed by:
 
-- [Your Name/Team Member 1]
-- [Team Member 2]
-- [Team Member 3]
+- [Sumaiya Islam](https://github.com/SuMayaBee)
+- [Munshi Md Arafat Hussain](https://github.com/arafatDU)
+
 
