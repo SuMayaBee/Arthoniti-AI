@@ -60,6 +60,12 @@ spring:
           uri: lb://website-builder
           predicates:
             - Path=/api/v1/website-builder/**
+        
+        # Route for the advanced Market Analysis Service
+        - id: market-analysis-service
+          uri: lb://market-analysis-service
+          predicates:
+            - Path=/api/v1/market-analysis/**
 
 eureka:
   client:
