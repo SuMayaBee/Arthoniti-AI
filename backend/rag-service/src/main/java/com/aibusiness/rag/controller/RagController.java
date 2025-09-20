@@ -1,33 +1,35 @@
 package com.aibusiness.rag.controller;
 
-import com.aibusiness.rag.dto.IngestRequest;
+import com.aibusiness.rag.dto.IngestResponse;
+import com.aibusiness.rag.dto.IngestUrlRequest;
 import com.aibusiness.rag.dto.QueryRequest;
 import com.aibusiness.rag.dto.QueryResponse;
-import com.aibusiness.rag.service.RagService;
+import com.aibusiness.rag.service.RagPipelineService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1/rag")
 @RequiredArgsConstructor
 public class RagController {
+    private final RagPipelineService ragPipelineService;
 
-    private final RagService ragService;
+    @PostMapping(value = "/ingest/file", consumes = "multipart/form-data")
+    public ResponseEntity<IngestResponse> ingestFile(@RequestParam("file") MultipartFile file) throws IOException {
+        return ResponseEntity.ok(ragPipelineService.ingestFile(file));
+    }
 
-    @PostMapping("/ingest")
-    public ResponseEntity<Void> ingestDocument(@RequestBody IngestRequest request) {
-        ragService.ingestDocument(request.getContent());
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    @PostMapping("/ingest/url")
+    public ResponseEntity<IngestResponse> ingestUrl(@RequestBody IngestUrlRequest request) {
+        return ResponseEntity.ok(ragPipelineService.ingestUrl(request.getUrl()));
     }
 
     @PostMapping("/query")
     public ResponseEntity<QueryResponse> query(@RequestBody QueryRequest request) {
-        QueryResponse response = ragService.query(request.getQuery());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ragPipelineService.query(request.getQuery()));
     }
 }
+
