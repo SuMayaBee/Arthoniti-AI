@@ -1,8 +1,16 @@
 ## Arthoniti AI 🚀 - Therap JavaFest 2025
 
-An enterprise-grade, AI-powered microservices platform designed to automate and accelerate business content creation, from initial market analysis to a fully deployable website.
+The purpose of **Arthoniti AI** is to **empower young entrepreneurs in Bangladesh** by removing the traditional barriers of **high costs, limited access to expertise, and complicated business setup processes**.  
 
-Welcome to **Arthoniti AI**, our submission for the Therap JavaFest 2025. This project is a comprehensive demonstration of a modern, scalable, and resilient backend system built entirely on the Spring ecosystem. It leverages a sophisticated microservices architecture to deliver a suite of ten powerful, AI-driven business tools, showcasing best practices in distributed systems, cloud-native design, and AI integration.
+It provides an **all-in-one AI-powered platform** where anyone can:  
+- Conduct market analysis  
+- Generate pitch decks  
+- Design logos  
+- Build websites  
+- Create legal documents  
+- Launch businesses quickly and affordably  
+
+By democratizing entrepreneurship, Arthoniti AI aims to **create jobs, boost the SME sector, and drive sustainable economic growth** in Bangladesh, while ensuring opportunities are accessible not only to urban elites but also to **rural youth and women entrepreneurs**. 
 
 ---
 
